@@ -1,0 +1,61 @@
+{
+  "version": "0.0.1-alpha.6",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 120,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "inspx",
+  "author": "raunofreiberg",
+  "module": "dist/inspx.esm.js",
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "husky": "^6.0.0",
+    "postcss": "^8.2.12",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rollup-plugin-postcss": "^4.0.0",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.2.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@radix-ui/popper": "^0.0.10"
+  },
+  "description": "Pixel perfect layout inspection.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raunofreiberg/inspx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/raunofreiberg/inspx/issues"
+  },
+  "homepage": "https://github.com/raunofreiberg/inspx#readme"
+}

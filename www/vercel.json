@@ -1,0 +1,37 @@
+{
+    "headers": [
+    {
+      "source": "/inter-var-latin.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/GT-Walsheim-Bold.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/JetBrainsMono-Regular.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/assets/scripts/plausible.js",
+      "destination": "https://plausible.io/js/plausible.js"
+    }
+  ]
+}

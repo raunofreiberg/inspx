@@ -1,0 +1,250 @@
+.onboard {
+  font-family: 'Inter';
+  color: white;
+  font-size: 24px;
+  position: absolute;
+  font-weight: 400;
+  top: 50%;
+  left: 50%;
+  line-height: 48px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  animation: fadeTip 300ms ease forwards;
+  animation-delay: 1700ms;
+}
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background-image: url('/grid.svg');
+  background-position: 50% 54%;
+  will-change: opacity, transform;
+  transform: scale(0);
+  opacity: 0;
+  animation: fadeGrid 1s ease forwards;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: radial-gradient(circle, rgba(2, 0, 36, 0) 0%, rgba(0, 0, 0, 1) 100%);
+
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-image: url('/bg.jpg');
+    background-size: cover;
+    z-index: -1;
+    filter: saturate(150%);
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    animation: fadeBg 300ms ease forwards;
+    animation-delay: 1s;
+  }
+
+  footer {
+    color: #666;
+    font-size: 12px;
+    position: fixed;
+    z-index: 1;
+    bottom: 32px;
+    transform: translateY(32px);
+    opacity: 0;
+    animation: fadeFooter 300ms ease forwards;
+    animation-delay: 2.3s;
+
+    a {
+      color: #666;
+
+      &:after {
+        bottom: -4px;
+      }
+    }
+  }
+
+  kbd {
+    font-family: 'Inter';
+    background: #222;
+    color: white;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    position: relative;
+    top: -2px;
+    box-shadow: 0 4px 0 #333;
+  }
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  padding: 0 16px;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fadeHero 300ms ease forwards;
+  animation-delay: 2s;
+
+  h1 {
+    font-family: 'GT Walsheim';
+    color: white;
+    font-size: 64px;
+  }
+
+  p {
+    color: #999999;
+    font-size: 16px;
+    margin-top: 8px;
+  }
+}
+
+.snippet {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-family: 'Mono';
+  color: white;
+  margin-top: 32px;
+  height: 40px;
+  position: relative;
+  border-radius: 9999px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.05);
+
+  button {
+    width: 15px;
+    height: 15px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-left: 16px;
+    outline: 0;
+    transition: color 100ms ease;
+    cursor: copy;
+
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    &:focus {
+      //box-shadow: 0 0 0 2px cyan;
+    }
+  }
+}
+
+.github {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  height: 40px;
+  margin-top: 16px;
+  font-size: 14px;
+
+  &:hover,
+  &:focus {
+    svg {
+      animation: shake 200ms ease;
+    }
+
+    &:after {
+      width: calc(100% + 2px);
+    }
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+    margin-left: 8px;
+    position: relative;
+    top: 1px;
+    transition: transform 200ms ease;
+  }
+}
+
+@keyframes fadeGrid {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeHero {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeFooter {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeBg {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.1;
+  }
+}
+
+@keyframes fadeTip {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  50% {
+    transform: translateX(4px) scale(1.05);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .root {
+    min-height: -webkit-fill-available;
+  }
+}
