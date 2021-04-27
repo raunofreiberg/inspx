@@ -74,7 +74,7 @@ import { InspectProps } from 'inspx';
 const Inspect = React.lazy(() => import('inspx'));
 
 export default function Loader(props: InspectProps) {
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'production') {
     return children;
   }
   return (
