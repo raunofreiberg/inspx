@@ -24,16 +24,20 @@ export default function Inspect({
   const nodesAtPointerRef = React.useRef<HTMLElement[]>([]);
 
   React.useEffect(() => {
+    let altKeyPressed = false;
+
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Alt') {
+      if (e.altKey) {
+        altKeyPressed = true;
         if (margin) inspectMargin(nodesAtPointerRef.current);
         if (size) inspectSize(nodesAtPointerRef.current);
         if (padding) inspectPadding(nodesAtPointerRef.current);
       }
     }
 
-    function onKeyUp(e: KeyboardEvent) {
-      if (e.key === 'Alt') {
+    function onKeyUp() {
+      if (altKeyPressed) {
+        altKeyPressed = false;
         uninspect();
       }
     }
