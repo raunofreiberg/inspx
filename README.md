@@ -75,7 +75,7 @@ const Inspect = React.lazy(() => import('inspx'));
 
 export default function Loader(props: InspectProps) {
   if (process.env.NODE_ENV === 'production') {
-    return children;
+    return props.children;
   }
   return (
     <React.Suspense fallback={null}>
