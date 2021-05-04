@@ -79,7 +79,7 @@ export default function Loader(props: InspectProps) {
   }
   return (
     <React.Suspense fallback={null}>
-      <Inspect {...props} />
+      <Inspect disabled={false} {...props} />
     </React.Suspense>
   );
 }
