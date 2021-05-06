@@ -14,6 +14,15 @@ export interface InspectProps {
   disabled?: boolean;
 }
 
+const SHAKE_THRESHOLD = 3000;
+let lastUpdate = 0;
+let lastAcceleration: DeviceMotionEventAcceleration = {
+  x: 0,
+  y: 0,
+  z: 0,
+};
+let isCloke = false;
+
 export default function Inspect({
   children,
   margin = true,
@@ -22,6 +31,7 @@ export default function Inspect({
   disabled = process.env.NODE_ENV !== 'development',
 }: InspectProps) {
   const nodesAtPointerRef = React.useRef<HTMLElement[]>([]);
+  const [reqUserGesture, setReqUserGesture] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -38,16 +48,59 @@ export default function Inspect({
       }
     }
 
+    function onDevicemotion(e: DeviceMotionEvent) {
+      const acceleration = e.accelerationIncludingGravity!;
+      const curTime = new Date().getTime();
+      if (curTime - lastUpdate > 100) {
+        var diffTime = curTime - lastUpdate;
+        lastUpdate = curTime;
+        const { x = 0, y = 0, z = 0 } = acceleration as DeviceMotionEventAcceleration;
+        const { x: lastX = 0, y: lastY = 0, z: lastZ = 0 } = lastAcceleration;
+        var speed = (Math.abs(x! + y! + z! - lastX! - lastY! - lastZ!) / diffTime) * 10000;
+        if (speed > SHAKE_THRESHOLD) {
+          if (isCloke) {
+            uninspect();
+            alert('Inspx is uninspect.');
+          } else {
+            alert('Inspx is working.');
+            if (margin) inspectMargin(nodesAtPointerRef.current);
+            if (size) inspectSize(nodesAtPointerRef.current);
+            if (padding) inspectPadding(nodesAtPointerRef.current);
+          }
+          isCloke = !isCloke;
+        }
+        lastAcceleration = acceleration;
+      }
+    }
+
     if (!disabled) {
       window.addEventListener('keyup', onKeyUp);
       window.addEventListener('keydown', onKeyDown);
+      // Need users to be authorized manually
+      if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              window.addEventListener('devicemotion', onDevicemotion);
+            } else {
+              setReqUserGesture(true);
+            }
+          })
+          .catch(e => {
+            alert(e);
+            setReqUserGesture(true);
+          });
+      } else {
+        window.addEventListener('devicemotion', onDevicemotion);
+      }
     }
 
     return () => {
       window.removeEventListener('keyup', onKeyUp);
       window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('devicemotion', onDevicemotion);
     };
-  }, [margin, size, padding, disabled]);
+  }, [margin, size, padding, disabled, reqUserGesture]);
 
   if (disabled) {
     return <React.Fragment>{children}</React.Fragment>;
@@ -64,13 +117,34 @@ export default function Inspect({
 
         nodesAtPointerRef.current = nodes as HTMLElement[];
 
-        if (e.altKey) {
+        if (e.altKey || isCloke) {
           if (margin) inspectMargin(nodes);
           if (size) inspectSize(nodes);
           if (padding) inspectPadding(nodes);
         }
       }}
     >
+      {reqUserGesture && (
+        <button
+          style={{
+            position: 'fixed',
+            top: '50vh',
+          }}
+          onClick={() => {
+            if (typeof DeviceMotionEvent.requestPermission === 'function') {
+              DeviceMotionEvent.requestPermission().then(permissionState => {
+                if (permissionState === 'granted') {
+                  setReqUserGesture(false);
+                } else {
+                  alert("You can't use Shake to wake up Inspx because you refused authorization.");
+                }
+              });
+            }
+          }}
+        >
+          Need users to be authorized manually，Click here！
+        </button>
+      )}
       {children}
     </span>
   );
