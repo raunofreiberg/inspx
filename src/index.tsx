@@ -77,8 +77,8 @@ export default function Inspect({
       window.addEventListener('keyup', onKeyUp);
       window.addEventListener('keydown', onKeyDown);
       // Need users to be authorized manually
-      if (typeof DeviceMotionEvent.requestPermission === 'function') {
-        DeviceMotionEvent.requestPermission()
+      if (window.DeviceMotionEvent && typeof window.DeviceMotionEvent.requestPermission === 'function') {
+        window.DeviceMotionEvent.requestPermission()
           .then(permissionState => {
             if (permissionState === 'granted') {
               window.addEventListener('devicemotion', onDevicemotion);
