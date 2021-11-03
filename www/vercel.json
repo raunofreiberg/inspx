@@ -27,11 +27,5 @@
         }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/assets/scripts/plausible.js",
-      "destination": "https://plausible.io/js/plausible.js"
-    }
   ]
 }
