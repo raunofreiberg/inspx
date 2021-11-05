@@ -129,6 +129,7 @@ export default function Inspect({
           style={{
             position: 'fixed',
             top: '50vh',
+            zIndex: 999,
           }}
           onClick={() => {
             if (typeof DeviceMotionEvent.requestPermission === 'function') {
