@@ -84,3 +84,24 @@ export default function Loader(props: InspectProps) {
   );
 }
 ```
+
+### use with umi
+
+get started with [umi](https://github.com/umijs/umi) by [umi-plugin-inspx](https://github.com/alitajs/umi-plugin-inspx).
+
+```bash
+yarn add umi-plugin-inspx
+```
+
+umi config
+
+```tsx
+export default {
+  inspx: {
+    disabled: false,
+    margin: true,
+    size: true,
+    padding: true,
+  },
+};
+```
