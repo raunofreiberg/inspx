@@ -22,7 +22,7 @@ function App({ Component, pageProps }) {
         <meta name="twitter:site" content="@raunofreiberg" />
         <meta name="twitter:creator" content="@raunofreiberg" />
         <meta name="twitter:card" content="summary_large_image" />
-        {!DEV && <script async defer data-domain="inspx.rauno.xyz" src="/assets/scripts/plausible.js" />}
+        {!DEV && <script async defer data-domain="inspx.rauno.xyz" src="https://plausible.io/js/plausible.js" />}
       </Head>
       <NextSeo
         title="inspx — pixel perfect layout inspection"
