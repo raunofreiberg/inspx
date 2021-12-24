@@ -41,7 +41,6 @@ export default function Inspect({
     }
 
     function onInspxSwitch() {
-      console.log('onInspxSwitch')
       if (isCloke) {
         uninspect();
       } else {
