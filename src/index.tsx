@@ -14,6 +14,8 @@ export interface InspectProps {
   disabled?: boolean;
 }
 
+let isCloke = false;
+
 export default function Inspect({
   children,
   margin = true,
@@ -38,14 +40,29 @@ export default function Inspect({
       }
     }
 
+    function onInspxSwitch() {
+      if (isCloke) {
+        uninspect();
+      } else {
+        if (margin) inspectMargin(nodesAtPointerRef.current);
+        if (size) inspectSize(nodesAtPointerRef.current);
+        if (padding) inspectPadding(nodesAtPointerRef.current);
+      }
+      isCloke = !isCloke;
+    }
+
     if (!disabled) {
       window.addEventListener('keyup', onKeyUp);
       window.addEventListener('keydown', onKeyDown);
+      // @ts-ignore
+      window.addEventListener('inspxswitch', onInspxSwitch);
     }
 
     return () => {
       window.removeEventListener('keyup', onKeyUp);
       window.removeEventListener('keydown', onKeyDown);
+      // @ts-ignore
+      window.removeEventListener('inspxswitch', onInspxSwitch);
     };
   }, [margin, size, padding, disabled]);
 
@@ -64,7 +81,7 @@ export default function Inspect({
 
         nodesAtPointerRef.current = nodes as HTMLElement[];
 
-        if (e.altKey) {
+        if (e.altKey || isCloke) {
           if (margin) inspectMargin(nodes);
           if (size) inspectSize(nodes);
           if (padding) inspectPadding(nodes);
