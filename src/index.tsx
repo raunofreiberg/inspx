@@ -7,7 +7,6 @@ import './styles.css';
 // <Inspect />
 
 export interface InspectProps {
-  children: React.ReactElement | React.ReactElement[];
   margin?: boolean;
   padding?: boolean;
   size?: boolean;
@@ -20,7 +19,7 @@ export default function Inspect({
   padding = true,
   size = true,
   disabled = process.env.NODE_ENV !== 'development',
-}: InspectProps) {
+}: React.PropsWithChildren<InspectProps>) {
   const nodesAtPointerRef = React.useRef<HTMLElement[]>([]);
 
   React.useEffect(() => {
