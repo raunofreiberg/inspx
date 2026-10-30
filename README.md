@@ -30,6 +30,17 @@ import Inspect from 'inspx';
 
 Inspect elements by hovering an element and holding <kbd>Option (⌥)</kbd> simultaneously.
 
+The `modifierKey` prop accepts `"Alt"` (the default, Option on macOS) or `"Control"`:
+
+```tsx
+<Inspect modifierKey="Control">
+  <App />
+</Inspect>
+```
+
+On macOS, holding Option to inspect can interfere with invoking screenshot shortcuts.
+Use `modifierKey="Control"` as an alternative when capturing inspection overlays.
+
 ![demo](/public/demo.gif)
 
 By default, any element with padding, margin, or width and height is inspectable.

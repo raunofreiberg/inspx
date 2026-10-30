@@ -12,6 +12,7 @@ export interface InspectProps {
   padding?: boolean;
   size?: boolean;
   disabled?: boolean;
+  modifierKey?: 'Alt' | 'Control';
 }
 
 export default function Inspect({
@@ -20,12 +21,13 @@ export default function Inspect({
   padding = true,
   size = true,
   disabled = process.env.NODE_ENV !== 'development',
+  modifierKey = 'Alt',
 }: InspectProps) {
   const nodesAtPointerRef = React.useRef<HTMLElement[]>([]);
 
   React.useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Alt') {
+      if (e.key === modifierKey) {
         if (margin) inspectMargin(nodesAtPointerRef.current);
         if (size) inspectSize(nodesAtPointerRef.current);
         if (padding) inspectPadding(nodesAtPointerRef.current);
@@ -33,7 +35,7 @@ export default function Inspect({
     }
 
     function onKeyUp(e: KeyboardEvent) {
-      if (e.key === 'Alt') {
+      if (e.key === modifierKey) {
         uninspect();
       }
     }
@@ -47,7 +49,7 @@ export default function Inspect({
       window.removeEventListener('keyup', onKeyUp);
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [margin, size, padding, disabled]);
+  }, [margin, size, padding, disabled, modifierKey]);
 
   if (disabled) {
     return <React.Fragment>{children}</React.Fragment>;
@@ -64,7 +66,7 @@ export default function Inspect({
 
         nodesAtPointerRef.current = nodes as HTMLElement[];
 
-        if (e.altKey) {
+        if (modifierKey === 'Alt' ? e.altKey : e.ctrlKey) {
           if (margin) inspectMargin(nodes);
           if (size) inspectSize(nodes);
           if (padding) inspectPadding(nodes);
